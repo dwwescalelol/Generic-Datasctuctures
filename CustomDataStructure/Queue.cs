@@ -36,11 +36,13 @@ namespace ZazCollectionGeneric
         /// <returns><see langword="true"/> if item is found in the <see cref="Queue{T}"/>, otherwise <see langword="false"/></returns>
         public bool Contains(T item)
         {
-            for (int i = head; i < Count + head; i++)
+            int i = tail;
+            for (int c = 0; c < Count; c++)
             {
                 i %= arr.Length;
                 if (arr[i].Equals(item))
                     return true;
+                i++;
             }
             return false;
         }
@@ -56,8 +58,8 @@ namespace ZazCollectionGeneric
             if (IsFull())
                 throw new ArgumentOutOfRangeException("Cannot Enqueue on full queue");
             Count++;
-            arr[head++] = item;
-            head %= arr.Length;
+            arr[tail++] = item;
+            tail %= arr.Length;
         }
         /// <summary>Removes and returns the generic item at the beginning of the <see cref="Queue{T}"/></summary>
         /// <returns>The object that is removed from the beginning of the <see cref="Queue{T}"/></returns>
@@ -67,8 +69,8 @@ namespace ZazCollectionGeneric
             if (IsEmpty())
                 throw new ArgumentOutOfRangeException("Cannot Dequeue on empty queue");
             Count--;
-            T temp = arr[tail++];
-            tail %= arr.Length;
+            T temp = arr[head++];
+            head %= arr.Length;
             return temp;
         }
         /// <summary>Returns the generic item at the beginning of the <see cref="Queue{T}"/> without removing it</summary>
@@ -97,21 +99,31 @@ namespace ZazCollectionGeneric
         public T[] ToArray()
         {
             T[] outArr = new T[Count];
-            for (int i = 0; i < Count; i++)
-                outArr[i] = arr[i];
+            int i = head;
+            for (int c = 0; c < Count; c++)
+            {
+                i %= arr.Length;
+                outArr[c] = arr[i];
+                i++;
+            }
             return outArr;
         }
-        /// <summary>Gets the current data of the <see cref="Queue{T}"/> which contains the max size, position of top and the contents</summary>
+        /// <summary>Gets the current data of the <see cref="Queue{T}"/> which contains the max size, current count, position of top and the contents</summary>
         /// <returns>The current information of the <see cref="Queue{T}"/></returns>
         public string Info()
         {
-            string info = "Max Size: " + arr.Length + "\nTail: " + tail + ", Head: " + head + "\nContents:\n";
+            string info = "Max Size: " + arr.Length
+                        + "\nCount: " + Count
+                        + "\nTail: " + tail + ", Head: " + head 
+                        + "\nContents:\n";
             for (int i = 0; i < arr.Length; i++)
             {
                 info += i + ": " + arr[i].ToString();
-                if (i == head - 1)
+                if (i == head && i == tail)
+                    info += " <--Head--><--Tail-->\n";
+                else if (i == head)
                     info += " <--Head-->\n";
-                else if (i == tail - 1)
+                else if (i == tail)
                     info += " <--Tail-->\n";
                 else
                     info += "\n";
