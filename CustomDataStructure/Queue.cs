@@ -4,6 +4,7 @@ namespace CustomDataStructures
 {
     class Queue<T> where T : IComparable
     {
+        #region Members and Constructor
         private readonly T[] arr;
         private int head, tail;
         /// <summary>Gets the number of elements contained in the <see cref="Queue{T}"/>.</summary>
@@ -25,10 +26,9 @@ namespace CustomDataStructures
             arr = new T[capacity];
             head = tail = Count = 0;
         }
-        //
-        //Queue Checks
-        //
+        #endregion
 
+        #region Stack Checks
         /// <summary>Gets a value indicating if the <see cref="Queue{T}"/> is empty.</summary>
         /// <returns><see langword="true"/> if <see cref="Queue{T}"/> is empty, otherwise <see langword="false"/>.</returns>
         public bool IsEmpty()
@@ -56,11 +56,9 @@ namespace CustomDataStructures
             }
             return false;
         }
+        #endregion
 
-        //
-        //Managing items in queue
-        //
-
+        #region Managing items in array
         /// <summary>Inserts <see cref="T"/> item at the tail of the <see cref="Queue{T}"/>.</summary>
         /// <param name="item">The <see cref="T"/> item to enqueue onto the tail of the <see cref="Queue{T}"/>. The value can be <see langword="null"/>.</param>
         /// <exception cref="ArgumentOutOfRangeException"> The Queue is full.</exception>
@@ -93,11 +91,9 @@ namespace CustomDataStructures
                 throw new ArgumentOutOfRangeException(nameof(Count));
             return arr[head];
         }
+        #endregion
 
-        //
-        //Utility
-        //
-
+        #region Utility
         /// <summary>Removes all items from the <see cref="Queue{T}"/> and sets all values to <see langword="default"/>.</summary>
         public void Clear()
         {
@@ -141,7 +137,6 @@ namespace CustomDataStructures
             }
             return info;
         }
-
-
+        #endregion
     }
 }

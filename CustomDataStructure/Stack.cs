@@ -4,6 +4,7 @@ namespace CustomDataStructures
 {
     class Stack<T> where T : IComparable
     {
+        #region Members and Constructor
         private readonly T[] arr;
         private int top;
         /// <summary>Gets the number of elements in the <see cref="Stack{T}"/>.</summary>
@@ -25,11 +26,9 @@ namespace CustomDataStructures
             arr = new T[capacity];
             top = 0;
         }
+        #endregion
 
-        //
-        //Stack Checks
-        //
-
+        #region Stack Checks
         /// <summary>Gets a value indicating if the <see cref="Stack{T}"/> is empty.</summary>
         /// <returns><see langword="true"/> if <see cref="Stack{T}"/> is empty, otherwise <see langword="false"/>.</returns>
         public bool IsEmpty()
@@ -56,11 +55,9 @@ namespace CustomDataStructures
                     return true;
             return false;
         }
-
-        //
-        //Managing items in array
-        //
-
+        #endregion
+        
+        #region Managing items in array
         /// <summary>Inserts <see cref="T"/> item at the top of the <see cref="Stack{T}"/>.</summary>
         /// <param name="item">The <see cref="T"/> item to push onto the top of the <see cref="Stack{T}"/>. The value can be <see langword="null"/>.</param>
         /// <exception cref="ArgumentOutOfRangeException"> The Stack is full.</exception>
@@ -89,11 +86,9 @@ namespace CustomDataStructures
                 throw new ArgumentOutOfRangeException(nameof(top));
             return arr[top - 1];
         }
-
-        //
-        //Utility
-        //
-
+        #endregion
+       
+        #region Utility
         /// <summary>Removes all items from the <see cref="Stack{T}"/> and sets all values to <see langword="default"/>.</summary>
         public void Clear()
         {
@@ -128,5 +123,6 @@ namespace CustomDataStructures
             }
             return info;
         }
+        #endregion
     }
 }
